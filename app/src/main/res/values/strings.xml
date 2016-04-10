@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">BookProgress</string>
+    <string name="InsertButton">Add</string>
+    <string name="RefreshButton">Refresh</string>
+    <string name="title_activity_add_state">AddStateActivity</string>
+    <string name="AddActivity_Name">Name</string>
+    <string name="AddActivity_CurrentPage">Current Page</string>
+    <string name="AddActivity_TotalPage">Total Page</string>
+    <string name="AddActivity_Save">SAVE</string>
+    <string name="AddActivity_Cancel">Cancel</string>
+    <string name="Adapter_Name">Title: </string>
+    <string name="Adapter_CurrentPage">Current: </string>
+    <string name="Adapter_TotalPage">Total: </string>
+    <string name="ProgressBar">Progress</string>
+    <string name="StatementDetails_Name">Title: </string>
+    <string name="StatementDetails_CurrentPage">Current: </string>
+    <string name="StatementDetails_TotalPage">Total: </string>
+    <string name="StatementDetails_Modify">Modify</string>
+    <string name="StatementDetails_Delete">Delete</string>
+</resources>
