@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -41,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
             FileInputStream fin = openFileInput("DATABASE");
             int length = fin.available();
             byte[] buffer = new byte[length];
-            fin.read(buffer, 0, length);
+            if(fin.read(buffer, 0, length) == -1)
+                throw new IOException("A Error Occurred when Reading from File to Buffer.");
             fin.close();
             str = new String(buffer, "UTF-8");
             System.out.println(str);
@@ -70,6 +70,20 @@ public class MainActivity extends AppCompatActivity {
             i++;
         }
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        int len = ProgressStatementList.size();
+        try {
+            FileOutputStream fout = openFileOutput("DATABASE", Context.MODE_PRIVATE);
+            for(int i = 0; i < len; i++)
+                fout.write(ProgressStatementList.get(i).get("Statement").convertToBytes());
+            fout.close();
+        }
+        catch(IOException ioException){
+            ioException.printStackTrace();
+        }
+    }
 
     public void AddNewStatement(View view)
     {
@@ -90,29 +104,26 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == REQUEST_CODE_ADD_ACTIVITY && resultCode == 1) {
             //Acquire Statement & Add to List
             ProgressStatement newProgressStatement = data.getParcelableExtra("New State");
-            int len = ProgressStatementList.size();
             HashMap<String, ProgressStatement> newHashMap = new HashMap<>();
             System.out.println("HashMap<String, ProgressStatement> Created.");
             newHashMap.put("Statement", newProgressStatement);
             ProgressStatementList.add(newHashMap);
-            //Write to File
-            try {
-                FileOutputStream fout = openFileOutput("DATABASE", Context.MODE_APPEND);
-                fout.write(ProgressStatementList.get(len).get("Statement").convertToBytes());
-                fout.close();
-            }
-            catch(FileNotFoundException Exception) {
-                Exception.printStackTrace();
-            }
-            catch(IOException ioException){
-                ioException.printStackTrace();
-            }
         }
         if(requestCode == REQUEST_CODE_DETAIL_ACTIVITY
                 && resultCode == StatementDetails.DELETE_STATEMENT_SUCCEED) {
+            //Delete Item in List
             int position = data.getIntExtra("Item Position", 0);
-            System.out.println(position);
             ProgressStatementList.remove(position);
+        }
+        if(requestCode == REQUEST_CODE_DETAIL_ACTIVITY
+                && resultCode == StatementDetails.MODIFY_STATEMENT_SUCCEED) {
+            //Modify the Item in List
+            int position = data.getIntExtra("Item Position", 0);
+            ProgressStatement newProgressStatement = data.getParcelableExtra("New ProgressStatement");
+            HashMap<String, ProgressStatement> newHashMap = new HashMap<>();
+            newHashMap.put("Statement", newProgressStatement);
+            ProgressStatementList.remove(position);
+            ProgressStatementList.add(newHashMap);
         }
     }
 

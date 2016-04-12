@@ -1,16 +1,13 @@
 package com.example.john.bookprogress;
 
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.content.Context;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class StatementDetails extends AppCompatActivity {
 
@@ -19,7 +16,7 @@ public class StatementDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statement_details);
         Intent GetIntent = getIntent();
-        ProgressStatement oldProgressStatement = GetIntent.getParcelableExtra("New State");
+        oldProgressStatement = GetIntent.getParcelableExtra("New State");
         position = GetIntent.getIntExtra("Item Position", 0);
 
         TextView[] textViews = {(TextView) findViewById(R.id.Statement_Details_Name),
@@ -35,40 +32,37 @@ public class StatementDetails extends AppCompatActivity {
         progressBar.setProgress((int)oldProgressStatement.Statement_GetProgress());
     }
 
+    public void ConfirmDetails(View view) {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("New ProgressStatement", oldProgressStatement);
+        intent.putExtras(bundle);
+        intent.putExtra("Item Position", position);
+        this.setResult(MODIFY_STATEMENT_SUCCEED, intent);
+        super.finish();
+    }
     public void ModifyDetails(View view) {
-
+        ModifyDetailsFragment dialogFragment = new ModifyDetailsFragment();
+        dialogFragment.show(getFragmentManager(), "Modify Dialog");
     }
     public void DeleteStatement(View view) {
-        try {
-            FileInputStream fin = openFileInput("DATABASE");
-            byte[] oldBuffer = new byte [fin.available()];
-            fin.read(oldBuffer);
-            fin.close();
-            String str = new String(oldBuffer, "UTF-8");
-
-            int str_start = 0, str_end = str.indexOf("#"), temp_position = position;
-            while(temp_position-- != 0) {
-                str_start = str_end + 1;
-                str_end = str.indexOf("#", str_start);
-            }
-            String newString = str.substring(0, str_start) + str.substring(str_end + 1);
-            byte[] newBuffer = newString.getBytes("UTF-8");
-
-            FileOutputStream fout = openFileOutput("DATABASE", Context.MODE_PRIVATE);
-            fout.write(newBuffer);
-            fout.close();
-        }
-        catch(IOException ioException) {
-            ioException.printStackTrace();
-        }
-
         Intent intent = new Intent();
         intent.putExtra("Item Position", position);
         this.setResult(DELETE_STATEMENT_SUCCEED, intent);
         super.finish();
     }
 
+    public void ModifyDetailsFragmentCallBack(int itemPosition, String str) {
+        System.out.println("CheckPoint A" + itemPosition);
+        switch(itemPosition) {
+            case 0:oldProgressStatement.Statement_SetName(str);break;
+            case 1:oldProgressStatement.Statement_SetCurrentPage(Integer.parseInt(str));break;
+            case 2:oldProgressStatement.Statement_SetTotalPage(Integer.parseInt(str));break;
+        }
+    }
+
     private static int position = 0;
+    private ProgressStatement oldProgressStatement;
     public static final int MODIFY_STATEMENT_SUCCEED = 1;
     public static final int DELETE_STATEMENT_SUCCEED = 2;
 }

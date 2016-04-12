@@ -15,6 +15,14 @@
     <string name="StatementDetails_Name">Title: </string>
     <string name="StatementDetails_CurrentPage">Current: </string>
     <string name="StatementDetails_TotalPage">Total: </string>
+    <string name="StatementDetails_Confirm">Confirm</string>
     <string name="StatementDetails_Modify">Modify</string>
     <string name="StatementDetails_Delete">Delete</string>
+    <string-array name="ModifyDetails">
+        <item>Title</item>
+        <item>Current Page</item>
+        <item>Total Page</item>
+    </string-array>
+    <string name="ModifyDetails_Confirm">Confirm</string>
+    <string name="ModifyDetails_Cancel">Cancel</string>
 </resources>

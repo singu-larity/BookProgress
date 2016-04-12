@@ -58,6 +58,8 @@
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/activity_horizontal_margin"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
         android:id="@+id/Statement_Details_ProgressBar"
         android:layout_below="@+id/Statement_Details_Current_Page"
         android:layout_alignParentEnd="true" />
@@ -68,6 +70,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="?android:attr/buttonBarNeutralButtonStyle"
+            android:text="@string/StatementDetails_Confirm"
+            android:onClick="ConfirmDetails"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
