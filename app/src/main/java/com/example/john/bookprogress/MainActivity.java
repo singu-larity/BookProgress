@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             HashMap<String, ProgressStatement> newHashMap = new HashMap<>();
             newHashMap.put("Statement", newProgressStatement);
             ProgressStatementList.remove(position);
-            ProgressStatementList.add(newHashMap);
+            ProgressStatementList.add(position, newHashMap);
         }
     }
 
