@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.FileOutputStream;
 
@@ -34,8 +35,10 @@ public class AddStateActivity extends AppCompatActivity {
                 editText[2].getText().toString()};
         //Check whether Information[i] is Empty
         for(int i = 0; i < 3; i++)
-            if(Information[i].isEmpty())
+            if(Information[i].isEmpty()) {
+                Toast.makeText(this, R.string.Blank_Tip_Information, Toast.LENGTH_SHORT).show();
                 return;
+            }
         //Create New Statement
         ProgressStatement newObject = new ProgressStatement(Information[0], Integer.parseInt(Information[1]), Integer.parseInt(Information[2]));
         //Send Statement Back

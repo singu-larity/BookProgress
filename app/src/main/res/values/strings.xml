@@ -25,4 +25,5 @@
     </string-array>
     <string name="ModifyDetails_Confirm">Confirm</string>
     <string name="ModifyDetails_Cancel">Cancel</string>
+    <string name="Blank_Tip_Information">Please Input All Information</string>
 </resources>

@@ -1,13 +1,11 @@
 package com.example.john.bookprogress;
 
-
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 
 public class StatementDetails extends AppCompatActivity {
 
@@ -53,7 +51,7 @@ public class StatementDetails extends AppCompatActivity {
     }
 
     public void ModifyDetailsFragmentCallBack(int itemPosition, String str) {
-        System.out.println("CheckPoint A" + itemPosition);
+        System.out.println("CheckPoint A " + itemPosition);
         switch(itemPosition) {
             case 0:oldProgressStatement.Statement_SetName(str);break;
             case 1:oldProgressStatement.Statement_SetCurrentPage(Integer.parseInt(str));break;
